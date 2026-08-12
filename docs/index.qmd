@@ -1,0 +1,68 @@
+---
+title: ""
+page-layout: full
+toc: false
+number-sections: false
+title-block-banner: false
+---
+
+::: {.ai4copsec-hero}
+<img src="assets/ai4copsec-logo.png" alt="AI4COPSEC">
+
+# ai4copsec-restapi
+
+A REST API that serves the AI4COPSEC technological bricks - ship/oil-spill
+detection, drift analysis, ship identification, and trajectory prediction -
+behind a single FastAPI application.
+:::
+
+**ai4copsec-restapi** wraps each technological brick from
+[ai4copsec-technological_bricks](https://github.com/ai4copsec/ai4copsec-technological_bricks)
+in a versioned HTTP endpoint, with OpenAPI docs generated automatically, optional
+OAuth2/Bearer authentication, and pluggable model discovery so externally
+installed algorithm packages show up without code changes.
+
+::: {.ai4copsec-home-grid}
+:::{}
+#### Technological bricks over HTTP
+
+Each brick (`sod`, `dan`, `shi`, `trp`) gets its own `/technological_brick/<brick>/...`
+routes, plus a combined `/technological_brick/algorithms` listing every
+registered algorithm across all bricks.
+:::
+
+:::{}
+#### Pluggable algorithms
+
+Algorithms register themselves via `ai4copsec.tbi.core.ModelRegistry`, either
+in-repo or as an installed plugin package - the API picks them up without
+changes to this codebase.
+:::
+
+:::{}
+#### OpenAPI out of the box
+
+Every route is documented and explorable at `/api/v1/docs` as soon as the
+server starts - no separate spec to maintain.
+:::
+:::
+
+## Getting started
+
+Install locally with all dependencies:
+
+```bash
+just install   # or: uv sync --all-extras --all-groups
+```
+
+Start the API:
+
+```bash
+uv run ai4copsec-restapi start --port=12000
+```
+
+The OpenAPI docs are then available at `http://127.0.0.1:12000/api/v1/docs`.
+
+See [Usage](usage.qmd) for SSL and OAuth configuration, and the
+[API reference](api/index.qmd) for the Python-level building blocks shared
+across the technological-brick routes.

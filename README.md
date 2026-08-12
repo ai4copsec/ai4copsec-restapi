@@ -2,6 +2,8 @@
 
 This package provides the RESTAPI for AI4COPSEC
 
+Full documentation: https://ai4copsec.github.io/ai4copsec-restapi
+
 ## Installation
 First, create a python virtual environment:
 
@@ -61,8 +63,21 @@ Add the authentication configuration to the .env file, e.g.:
 
 ```
 AI4COPSEC_RESTAPI_OAUTH_REQUIRED=true
-AI$COPSEC_RESTAPI_OAUTH_URL="http://ai4copsec.identity-provider.org"
-AI$COPSEC_RESTAPI_OAUTH_REALM="ai4copsec-realm"
+AI4COPSEC_RESTAPI_OAUTH_URL="http://ai4copsec.identity-provider.org"
+AI4COPSEC_RESTAPI_OAUTH_REALM="ai4copsec-realm"
+```
+
+## Development
+
+Task shortcuts are collected in the `justfile` (requires
+[`uv`](https://docs.astral.sh/uv/) and [`just`](https://just.systems/)):
+
+```
+just install   # install all dependencies (extras + dependency groups)
+just lint      # format + lint with ruff
+just test      # run the test suite
+just docs      # build the Quarto documentation site locally (./public)
+just bump PATCH|MINOR|MAJOR  # lint + test, then bump the version, tag and push
 ```
 
 ## Testing

@@ -1,0 +1,68 @@
+---
+title: "Usage"
+toc: true
+number-sections: false
+---
+
+All use cases are covered by subcommands of the `ai4copsec-restapi` command
+line tool. By default, settings are read from a `.env` file in the current
+working directory; every subcommand also accepts `--env-file <filename>` to
+point at a specific configuration.
+
+## Starting the API
+
+```bash
+ai4copsec-restapi start --port=12000
+```
+
+The API is then reachable on port 12000, with the OpenAPI docs at:
+
+```
+http://127.0.0.1:12000/api/v1/docs
+```
+
+## Running with SSL
+
+Get or create a certificate and pass it to `start`:
+
+```bash
+openssl req -nodes -new -x509 -keyout key.pem -out cert.pem -days 365 \
+    -subj "/C=countrycode/ST=state/L=city/O=Organization Name/OU=Unit Name/CN=cname/emailAddress=creator@yourdomain"
+
+ai4copsec-restapi start --reload --port 12000 --host 0.0.0.0 \
+    --ssl-keyfile key.pem --ssl-certfile cert.pem
+```
+
+## Enabling OAuth
+
+By default, Bearer-token authentication is disabled. To enable it, configure
+the API according to your identity provider - the setup has been
+developed/tested with Keycloak. Add the following to your `.env` file:
+
+```
+AI4COPSEC_RESTAPI_OAUTH_REQUIRED=true
+AI4COPSEC_RESTAPI_OAUTH_URL="http://ai4copsec.identity-provider.org"
+AI4COPSEC_RESTAPI_OAUTH_REALM="ai4copsec-realm"
+```
+
+## Technological brick endpoints
+
+Each technological brick exposes the same three-route shape under
+`/api/v1/technological_brick/<brick>/`:
+
+| Brick | Prefix | Description |
+| --- | --- | --- |
+| Ship/oil-spill detection | `sod` | `description`, `algorithms`, `detect` |
+| Drift analysis | `dan` | `description`, `algorithms`, `compute` |
+| Ship identification | `shi` | `description`, `algorithms`, `identify` |
+| Trajectory prediction | `trp` | `description`, `algorithms`, `predict` |
+
+`/api/v1/technological_brick/algorithms` lists every registered algorithm
+across all four bricks in one call. The full request/response schemas are
+always up to date at `/api/v1/docs`.
+
+## Testing
+
+```bash
+just test   # or: uv run pytest tests/
+```

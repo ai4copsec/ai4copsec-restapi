@@ -1,0 +1,72 @@
+---
+title: "Repository layout"
+toc: true
+number-sections: false
+---
+
+Keep this map in sync with the package after any structural change (new or
+moved modules).
+
+```text
+src/ai4copsec/restapi/
+  __init__.py             # exports __version__
+  version.py              # single version source (bumped by commitizen)
+  config.py                # logging format constants
+  app_settings.py          # AppSettings: env-file loading, OAuth/Keycloak config
+  db_operations.py         # SQL helper(s) shared across db-backed endpoints
+  v1.py                    # FastAPI app factory: lifespan, CORS, exception
+                            #   handlers, mounts api/v1/router under /api/v1
+
+  api/
+    v1/
+      router.py             # top-level router: mounts routes.py + each tb_*.py
+      routes.py              # api_router, OAuth2 bearer scheme, TokenPayload
+      response_models.py     # shared pydantic response models
+      user.py                 # /user routes
+      tb_common.py            # execute_or_http_error() - shared error translation
+                                #   for all technological_brick/* routes
+      tb_sod.py                # /technological_brick/sod/* (ship/oil detection)
+      tb_dan.py                 # /technological_brick/dan/* (drift analysis)
+      tb_shi.py                  # /technological_brick/shi/* (ship identification)
+      tb_trp.py                   # /technological_brick/trp/* (trajectory prediction)
+      tb_algorithms.py              # /technological_brick/algorithms (all bricks)
+
+  cli/
+    main.py                  # entry point (ai4copsec-restapi console script)
+    base.py                   # BaseParser: subcommand-parser plumbing
+    restapi.py                 # `start` subcommand (runs the API via uvicorn)
+
+  db/
+    v1/
+      db.py                   # Database (re-exported from db_base)
+      db_base.py                # SQLAlchemy engine/session setup
+                                  # NOTE: imports a `.validation` module that does
+                                  #   not currently exist in this repo - broken,
+                                  #   pre-existing, not yet fixed.
+      db_tables.py               # SQLAlchemy ORM table definitions
+
+  timescaledb/
+    dialect.py                # TimescaleDB-specific DDL/dialect glue
+    functions.py                # custom SQL functions (e.g. `first`) for
+                                  #   TimescaleDB queries
+
+  utils/
+    api.py                   # createFastAPI() app-factory helper
+    cache.py                   # fastapi-cache key helpers
+    command.py, docker.py, process.py, slurm.py, stats_types.py,
+    system_info.py            # carried over from the slurm-monitor codebase this
+                                #   package originated from; not yet audited for
+                                #   relevance to ai4copsec-restapi specifically.
+
+  resources/                # bundled data (e.g. sonar type specs), not code
+```
+
+Two naming inconsistencies are worth knowing about if you're navigating the
+repo rather than trusting this map blindly:
+
+- The test tree is `tests/aicopsec/` (no "4"), not `tests/ai4copsec/` as the
+  package name would suggest - pre-existing, not yet renamed.
+- Several modules under `utils/` and files like `db_operations.py` read as
+  leftovers from an earlier, differently-scoped codebase (references to Slurm,
+  clusters, nodes) rather than this package's own domain; they haven't been
+  pruned or re-homed yet.

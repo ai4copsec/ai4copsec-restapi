@@ -1,0 +1,58 @@
+project:
+  type: website
+  output-dir: ../public
+
+website:
+  title: "ai4copsec-restapi"
+  description: "REST API serving the AI4COPSEC technological bricks"
+  page-navigation: true
+  bread-crumbs: false
+  favicon: assets/ai4copsec-favicon.png
+
+  navbar:
+    logo: assets/ai4copsec-logo.png
+    logo-alt: "AI4COPSEC"
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Usage"
+        href: usage.qmd
+      - text: "API reference"
+        href: api/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/ai4copsec/ai4copsec-restapi
+
+  page-footer:
+    left: |
+      Part of [AI4COPSEC](https://ai4copsec.eu/).
+    center: |
+      Built with [Quarto](https://quarto.org).
+    right: |
+      [GitHub](https://github.com/ai4copsec/ai4copsec-restapi)
+
+format:
+  html:
+    theme: cosmo
+    css: assets/ai4copsec.css
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    smooth-scroll: true
+    page-layout: full
+
+highlight-style: github
+
+quartodoc:
+  title: "API Reference"
+  style: pkgdown
+  parser: google
+  package: ai4copsec.restapi
+  dir: api
+  sections:
+    - title: "Technological brick routes"
+      desc: >
+        Shared helpers used by the `/technological_brick/*` route modules
+        (`tb_sod`, `tb_dan`, `tb_shi`, `tb_trp`, `tb_algorithms`).
+      contents:
+        - api.v1.tb_common.execute_or_http_error
