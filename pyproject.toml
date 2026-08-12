@@ -32,7 +32,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "ai4copsec@git+https://github.com/ai4copsec/ai4copsec-technological_bricks.git",
+    "ai4copsec-technological_bricks", # @ git+https://github.com/ai4copsec/ai4copsec-technological_bricks.git",
     "asyncpg",
     "aiosqlite",
     "cachetools",
@@ -96,6 +96,13 @@ test = [
 
 [project.scripts]
 ai4copsec-restapi = "ai4copsec.restapi.cli.main:run"
+
+# DEV-ONLY: exercise the ai4copsec-technological_bricks changes 
+# merging for real, replace this with the git source once technological_bricks is
+# pushed/tagged, e.g.:
+#   ai4copsec = { git = "https://github.com/ai4copsec/ai4copsec-technological_bricks.git", rev = "<new-commit-or-tag>" }
+[tool.uv.sources]
+ai4copsec-technological-bricks = { path = "../ai4copsec-technological_bricks", editable = true }
 
 [tool.mypy]
 ignore_missing_imports = true

@@ -11,9 +11,6 @@ import time
 import ai4copsec.restapi.cli.main as cli_main
 from ai4copsec.restapi.cli.restapi import RestapiParser
 
-from ai4copsec.restapi.db_operations import DBManager
-from ai4copsec.restapi.utils.command import Command
-from ai4copsec.restapi.db.v1.db_tables import SampleDisk
 from ai4copsec.restapi.app_settings import AI4COPSEC_RESTAPI_PORT
 
 @pytest.fixture

@@ -18,7 +18,6 @@ from sqlalchemy.ext.asyncio import (
 import logging
 
 from .db_tables import TableBase
-from .validation import Specification
 
 logger = logging.getLogger(__name__)
 
@@ -60,9 +59,6 @@ class Database:
         db_url = self.db_url = create_url(
             db_settings.uri, db_settings.user, db_settings.password
         )
-
-        spec = Specification()
-        spec.augment(TableBase.metadata.tables)
 
         engine_kwargs = {}
         self.engine = create_engine(db_url, **engine_kwargs)
