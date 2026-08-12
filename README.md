@@ -32,9 +32,14 @@ Note, that all subcommands take a '--env-file <filename>' argument to specify a 
 
 ### start:
 
-The API should now be accessible. Check the docs via:
 ```
-    http://<your host>:12000/api/v1/docs
+    $> ai4copsec-restapi start --port=12000
+```
+
+The API should now be accessible on port 12000.
+You are now able to check the openapi docs via:
+```
+    http://127.0.0.1:12000/api/v1/docs
 ```
 
 #### Running with ssl
@@ -50,7 +55,7 @@ To run with ssl, get or create a certificate and run as follows:
 #### Enabling OAuth
 
 By default Bearer token based authentication is disabled. To enable set the configuration according to
-your identity provider. The setup has been tested with keycloak.
+your identity provider. The setup has been developed/tested with keycloak.
 
 Add the authentication configuration to the .env file, e.g.:
 
