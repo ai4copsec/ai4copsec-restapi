@@ -26,7 +26,7 @@ def test_shi_identify_unknown_algorithm_is_a_bad_request(client):
     from ai4copsec.tbi.ship_identification.base import ShipIdentification
 
     sample = ShipIdentification().create_input_sample()
-    sample.algorithm = "does-not-exist"
+    sample.algorithm.name = "does-not-exist"
 
     response = client.post("/api/v1/technological_brick/shi/identify", json=sample.model_dump(mode="json"))
     assert response.status_code == 400

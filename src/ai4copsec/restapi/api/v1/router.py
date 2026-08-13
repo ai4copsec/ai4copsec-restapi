@@ -4,6 +4,7 @@ from ai4copsec.restapi.utils.api import createFastAPI
 from . import (
     routes,
     tb_algorithms,  # noqa
+    tb_aad, # noqa
     tb_dan,  # noqa
     tb_shi,  # noqa
     tb_sod,  # noqa
