@@ -1,7 +1,6 @@
 [build-system]
 requires = ["setuptools >= 61.0.0",
-    "build",
-    "sphinx"]
+    "build"]
 build-backend = "setuptools.build_meta"
 
 # https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
@@ -74,16 +73,14 @@ repository = "https://github.com/ai4copsec/ai4copsec-restapi.git"
 
 dev = [
     "isort",
-    "jupyter-book<2",
     "pre-commit",
     "ruff",
-    "sphinx-autoapi",
     "tox"
 ]
 
 test = [
     "coverage",
-    "httpx",
+    "httpx2",
     "pytest",
     "pytest-asyncio",
     "pytest-console-scripts",
@@ -103,6 +100,11 @@ ai4copsec-restapi = "ai4copsec.restapi.cli.main:run"
 #   ai4copsec = { git = "https://github.com/ai4copsec/ai4copsec-technological_bricks.git", rev = "<new-commit-or-tag>" }
 [tool.uv.sources]
 ai4copsec-technological-bricks = { path = "../ai4copsec-technological_bricks", editable = true }
+
+# uv dependency group (distinct from the [project.optional-dependencies] extras above):
+# installed by `just install`/`just docs`, not part of the published package's extras.
+[dependency-groups]
+docs = ["quartodoc>=0.11"]
 
 [tool.mypy]
 ignore_missing_imports = true
