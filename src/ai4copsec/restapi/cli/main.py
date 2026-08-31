@@ -6,6 +6,7 @@ from logging import getLogger
 
 from .base import BaseParser
 from .restapi import RestapiParser
+from .aad_test import AADTestParser
 
 from ai4copsec.restapi.app_settings import AppSettings
 
@@ -64,6 +65,12 @@ def run():
         subcommand="start",
         help="Start the restapi",
         parser_klass=RestapiParser
+    )
+
+    main_parser.attach_subcommand_parser(
+        subcommand="aad-test",
+        help="Score AIS trajectories loaded from file(s) against an AAD algorithm",
+        parser_klass=AADTestParser
     )
 
     args, unknown_args = main_parser.parse_known_args()
