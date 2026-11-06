@@ -92,7 +92,7 @@ For testing one can run tox.
 This project is open to contributions. For details on how to contribute please check the [Contribution Guidelines](https://github.com/ai4copsec/ai4copsec-restapi/CONTRIBUTING.md)
 
 ## License
-This project is licensed under the [TO BE DEFINED](https://github.com/ai4copsec/ai4copsec-restapi/blob/main/LICENSE).
+This project is licensed under the [New BSD License](https://github.com/ai4copsec/ai4copsec-restapi/blob/main/LICENSE).
 
 ## Copyright
 Copyright (c) 2026 [AI4COPSEC Consortium](https://www.ai4copsec.eu/consortium)
